@@ -33,7 +33,7 @@ git clone --depth=1 https://github.com/maravento/blackstring.git
 ### HOW TO USE
 ---
 
-####  Download and Checksum
+####  Checksum
 
 ```
 wget -q -N https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt
@@ -45,7 +45,7 @@ md5sum blackstring.txt | awk '{print $1}' && cat checksum.md5 | awk '{print $1}'
 
 Edit your Iptables bash script and add the following rule in the header: / Edite su Iptables bash script y agregue en la cabecera la siguiente regla:
 ```
-# BLACKSTRING
+# BLACKSTRING OFFLINE
 blackstring=/path_to_blackstring/blackstring.txt
 iptables=/sbin/iptables
 lan=eth1
@@ -54,6 +54,18 @@ for string in `sed -e '/^#/d' -e 's:#.*::g' $blackstring`; do
     $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j DROP
 done
 ```
+or
+```
+# BLACKSTRING ONLINE
+blackstring=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt)
+iptables=/sbin/iptables
+lan=eth1
+for string in `echo -e "$blackstring" | sed -e '/^#/d' -e 's:#.*::g'`; do
+    $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j NFLOG --nflog-prefix 'Blackstring: '
+    $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j DROP
+done
+```
+
 #####  Replace LAN (eth1)
 
 ```
