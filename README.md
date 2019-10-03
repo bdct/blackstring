@@ -28,14 +28,12 @@ git clone --depth=1 https://github.com/maravento/blackstring.git
 ---
 
 - This project contains hexadecimal chains that are not exclusive to anonymizers, so they can eventually generate false positives. Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Note that string matching must be the last resort. It is intensive and unreliable. Use it at your own risk / Este proyecto contiene cadenas hexadecimales que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos. Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas debe ser el último recurso. Es intensivo y poco confiable. Úselo bajo su propio riesgo
-- At the moment only hex-strings for [Ultrasurf](https://ultrasurf.us/) are included. Block is not guaranteed with all versions / Por el momento solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/). No se garantiza el bloqueo para todas las versiones
+- At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) v18x-v19x for Windows. For some discontinued versions, other operating systems, browser extensions and other anonymizers, it is recommended to use [Squid](http://www.squid-cache.org/) (non-transparent proxy mode) with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects ([advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)) / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/) v18x-v19x para Windows. Para algunas versiones descontinuadas, otros sistemas operativos, extensiones de navegador y otros anonimizadores, se recomienda usar [Squid](http://www.squid-cache.org/) (modo proxy no-transparente) con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) ([reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules))
 
 ### HOW TO USE
 ---
 
 ####  Download and Checksum
-
-Download `blackstring.txt` and save it in your preferred route / Descargue `blackstring.txt` y guardela en su ruta de su preferencia
 
 ```
 wget -q -N https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt
@@ -45,7 +43,7 @@ md5sum blackstring.txt | awk '{print $1}' && cat checksum.md5 | awk '{print $1}'
 
 ####  [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) Rule
 
-Edit your Iptables firewall script and add the following rule in the header: / Edite su script del firewall Iptables y agregue en la cabecera la siguiente regla:
+Edit your Iptables bash script and add the following rule in the header: / Edite su Iptables bash script y agregue en la cabecera la siguiente regla:
 ```
 # BLACKSTRING
 blackstring=/path_to_blackstring/blackstring.txt
@@ -56,18 +54,16 @@ for string in `sed -e '/^#/d' -e 's:#.*::g' $blackstring`; do
     $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j DROP
 done
 ```
-#####  Replace LAN
+#####  Replace LAN (eth1)
 
-Replace `eth1` with the name of your local interface / Reemplace `eth1` por el nombre de su interface local
 ```
 ip -o link | awk '$2 != "lo:" {print $2, $(NF-2)}'
 enp2s1: 08:00:27:XX:XX:XX
 enp2s0: 94:18:82:XX:XX:XX
 ```
 
-#####  Log
+#####  NFLOG (/var/log/ulog/syslogemu.log)
 
-Check: `/var/log/ulog/syslogemu.log` / Verifique: `/var/log/ulog/syslogemu.log`
 ```
 Sep 30 19:09:10 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:00:27:XX:XX:XX:08:00 SRC=192.16.48.200 DST=192.168.1.198 LEN=1440 TOS=00 PREC=0x00 TTL=46 ID=2570 PROTO=TCP SPT=443 DPT=52335 SEQ=3803412614 ACK=2610496290 WINDOW=288 ACK URGP=0 MARK=0
 Sep 30 19:09:10 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:00:27:XX:XX:XX:08:00 SRC=192.16.48.200 DST=192.168.1.198 LEN=1440 TOS=00 PREC=0x00 TTL=46 ID=2598 PROTO=TCP SPT=443 DPT=52335 SEQ=3803412614 ACK=2610496290 WINDOW=288 ACK URGP=0 MARK=0
