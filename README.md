@@ -9,7 +9,7 @@
 
 |lst|hex-strings|Iptables Tested|
 | :---: | :---: | :---: |
-|[blackstring.txt](https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt)|6|v1.6.1|
+|[blackstring.txt](https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt)|1|v1.6.1|
 
 ### DEPENDENCIES
 ---
@@ -28,7 +28,7 @@ git clone --depth=1 https://github.com/maravento/blackstring.git
 ---
 
 - This project contains hexadecimal chains that are not exclusive to anonymizers, so they can eventually generate false positives. Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Note that string matching must be the last resort. It is intensive and unreliable. Use it at your own risk / Este proyecto contiene cadenas hexadecimales que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos. Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas debe ser el último recurso. Es intensivo y poco confiable. Úselo bajo su propio riesgo
-- At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) v18x-v19x for Windows. For some discontinued versions, other operating systems, browser extensions and other anonymizers, it is recommended to use [Squid](http://www.squid-cache.org/) (non-transparent proxy mode) with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects ([advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)) / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/) v18x-v19x para Windows. Para algunas versiones descontinuadas, otros sistemas operativos, extensiones de navegador y otros anonimizadores, se recomienda usar [Squid](http://www.squid-cache.org/) (modo proxy no-transparente) con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) ([reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules))
+- At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) v18x-v19x for Windows. For previous or discontinued versions, versions for smartphones, browser extensions and other anonymizers, it is recommended to use [Squid](http://www.squid-cache.org/) (non-transparent proxy mode) with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects ([advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)) / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/) v18x-v19x para Windows. Para versiones anteriores o descontinuadas, versiones para smartphones, extensiones de navegadores y otros anonimizadores, se recomienda usar [Squid](http://www.squid-cache.org/) (modo proxy no-transparente) con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) ([reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules))
 
 ### HOW TO USE
 ---
