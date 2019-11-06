@@ -9,7 +9,7 @@
 
 |lst|hex-strings|Iptables Tested|
 | :---: | :---: | :---: |
-|[blackstring.txt](https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt)|1|v1.6.1|
+|[blackstring.txt](https://raw.githubusercontent.com/maravento/blackstring/master/blackstring.txt)|3|v1.6.1|
 
 ### DEPENDENCIES
 ---
@@ -43,7 +43,7 @@ md5sum blackstring.txt | awk '{print $1}' && cat checksum.md5 | awk '{print $1}'
 
 ####  [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) Rule
 
-Edit your Iptables bash script and add the following rule in the header: / Edite su Iptables bash script y agregue en la cabecera la siguiente regla:
+Edit your Iptables bash script and add the following rule: / Edite su Iptables bash script y agregue la siguiente regla:
 ```
 # BLACKSTRING OFFLINE
 blackstring=/path_to_blackstring/blackstring.txt
