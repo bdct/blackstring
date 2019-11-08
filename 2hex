@@ -6,7 +6,7 @@
 160301009f0100009b0303
 1603010101010000fd0303
 1603010139010001350303
-# Ultrasurf v18x 19x
+# Ultrasurf v18x v19x
 1603010096010000920303
 1603010097010000930303
 1603010099010000950303
@@ -14,10 +14,15 @@
 160301009b010000970303
 160301009c010000980303
 160301009d010000990303
+16030100aa010000a60303 # FP: discovery-1.syncthing.net, discovery-3.syncthing.net.
 16030100ad010000a90303
+16030100ae010000aa0303 # FP: pps.whatsapp.net, movip.wps.com, z.moatads.com
+16030100b6010000b20303 # FP: acompli.helpshift.com, settings.crashlytics.com
+16030100be010000ba0303 # FP: www.tsx.com, media-mia3-2.cdn.whatsapp.net, block-edge-anycast.dropbox.com
+16030100c0010000bc0303 # FP: www.septa.org, phonedeviceverificationpa.googleapis.com
+16030100c3010000bf0303 # FP: spay.samsung.com
 16030100c6010000c20303
 16030100ca010000c60303
-16030100cc010000c80303
 16030100ce010000ca0303
 1603010136010001320303
 160301014f0100014b0303
@@ -27,12 +32,6 @@
 16030101bd010001b90303
 16030300b9010000b50303
 16030300bb010000b70303
-# Ultrasurf v18x 19x share
-16030100aa010000a60303 # affects: discovery-1.syncthing.net, discovery-3.syncthing.net.
-16030100ae010000aa0303 # affects: pps.whatsapp.net, movip.wps.com, z.moatads.com
-16030100b6010000b20303 # affects: acompli.helpshift.com, settings.crashlytics.com
-16030100be010000ba0303 # affects: www.tsx.com, media-mia3-2.cdn.whatsapp.net, block-edge-anycast.dropbox.com
-16030100c0010000bc0303 # affects: www.septa.org, phonedeviceverificationpa.googleapis.com
-16030100c3010000bf0303 # affects: spay.samsung.com
 # Ultrasurf extension
-1603010200010001fc0303 # affects: play.google.com chat-pa.clients6.google.com
+62617a6f6f6b6172696464616e63656c697669646c792e696e666f0017
+68656674696e657373636f6e677265737363616e64792e696e666f0017
