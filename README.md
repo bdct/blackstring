@@ -14,8 +14,8 @@ iptables ulogd2
 ### ⚠️ WARNING: BEFORE YOU CONTINUE!
 ---
 
-- This project contains hexadecimal chains that are not exclusive to anonymizers, so they can eventually generate false positives (FP). Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Note that string matching is intensive and unreliable. To block anonymizers there are other more effective solutions, such as VPN or [Squid](http://www.squid-cache.org/) (non-transparent proxy mode) with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects ([advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Use it at your own risk / Este proyecto contiene cadenas hexadecimales que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos (FP). Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas es intensiva y poco confiable. Para bloquear los anonimizadores existen otras soluciones más efectivas, como las VPN o [Squid](http://www.squid-cache.org/) (modo proxy no-transparente) con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) ([reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules)). Úselo bajo su propio riesgo
-- At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) v18x-v19x for Windows / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/) v18x-v19x para Windows
+- This project contains hexadecimal chains that are not exclusive to anonymizers, so they can eventually generate false positives (FP). Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Keep in mind that string matching is intensive, unreliable and is the last resort, since to block anonymizers there are other more effective solutions, such as VPNs, Web Filters, domain-wide security policies, Firewalls, Proxy ([Squid](http://www.squid-cache.org/) non-transparent proxy mode with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects [advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Use it at your own risk / Este proyecto contiene cadenas hexadecimales que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos (FP). Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas es intensiva, poco confiable y es el último recurso, ya que para bloquear los anonimizadores existen otras soluciones más efectivas, como VPNs, Web Filters, Firewalls, domain-wide security policies, Proxy ([Squid](http://www.squid-cache.org/) modo proxy no-transparente con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) [reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Úselo bajo su propio riesgo
+- At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/)
 
 ### HOW TO USE
 ---
@@ -24,19 +24,19 @@ iptables ulogd2
 
 Edit your Iptables bash script and add the following rule: / Edite su Iptables bash script y agregue la siguiente regla:
 ```
-# BLACKSTRING
+# BLACKSTRING (BS)
 # Global Variables
 iptables=/sbin/iptables
 lan=eth1
 # Blackstring Variables
-bs1=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/1hex)
-bs2=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/2hex)
+BSG=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/bsgen)
+BSH=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/bshex)
 # Blackstring Rule
 $iptables -N blackstring
-for string in `echo -e "$bs1" | sed -e '/^#/d' -e 's:#.*::g'`; do
+for string in `echo -e "$BSG" | sed -e '/^#/d' -e 's:#.*::g'`; do
     $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j blackstring
 done
-for string in `echo -e "$bs2" | sed -e '/^#/d' -e 's:#.*::g'`; do
+for string in `echo -e "$BSH" | sed -e '/^#/d' -e 's:#.*::g'`; do
     $iptables -A blackstring -m string --hex-string "|$string|" --algo bm -j NFLOG --nflog-prefix 'Blackstring: '
     $iptables -A blackstring -m string --hex-string "|$string|" --algo bm -j DROP
 done
