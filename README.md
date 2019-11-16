@@ -37,8 +37,8 @@ for string in `echo -e "$BSG" | sed -e '/^#/d' -e 's:#.*::g'`; do
     $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j blackstring
 done
 for string in `echo -e "$BSH" | sed -e '/^#/d' -e 's:#.*::g'`; do
-    $iptables -A blackstring -m string --hex-string "|$string|" --algo bm -j NFLOG --nflog-prefix 'Blackstring: '
-    $iptables -A blackstring -m string --hex-string "|$string|" --algo bm -j DROP
+    $iptables -A blackstring -m string --hex-string "|$string|" --algo kmp -j NFLOG --nflog-prefix 'Blackstring: '
+    $iptables -A blackstring -m string --hex-string "|$string|" --algo kmp -j DROP
 done
 ```
 
@@ -60,6 +60,11 @@ Sep 30 19:09:10 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:
 Sep 30 19:09:11 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:00:27:XX:XX:XX:08:00 SRC=192.16.48.200 DST=192.168.1.198 LEN=1440 TOS=00 PREC=0x00 TTL=46 ID=2672 PROTO=TCP SPT=443 DPT=52335 SEQ=3803412614 ACK=2610496290 WINDOW=288 ACK URGP=0 MARK=0
 Sep 30 19:09:12 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:00:27:XX:XX:XX:08:00 SRC=13.224.106.59 DST=192.168.1.198 LEN=552 TOS=00 PREC=0x00 TTL=229 ID=55082 DF PROTO=TCP SPT=443 DPT=52331 SEQ=2591131959 ACK=3496229244 WINDOW=119 ACK URGP=0 MARK=0
 ```
+
+##### Algorithms Used
+
+-  [bm](https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm)
+-  [kmp](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm)
 
 ### CONTRIBUTIONS
 ---
