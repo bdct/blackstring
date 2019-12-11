@@ -11,10 +11,16 @@
 iptables ulogd2
 ```
 
+### GIT CLONE
+---
+```
+git clone --depth=1 https://github.com/maravento/blackstring.git
+```
+
 ### ⚠️ WARNING: BEFORE YOU CONTINUE!
 ---
 
-- This project contains hexadecimal chains that are not exclusive to anonymizers, so they can eventually generate false positives (FP). Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Keep in mind that string matching is intensive, unreliable and is the last resort, since to block anonymizers there are other more effective solutions, such as VPNs, Web Filters, domain-wide security policies, Firewalls, Proxy ([Squid](http://www.squid-cache.org/) non-transparent proxy mode with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects [advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Use it at your own risk / Este proyecto contiene cadenas hexadecimales que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos (FP). Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas es intensiva, poco confiable y es el último recurso, ya que para bloquear los anonimizadores existen otras soluciones más efectivas, como VPNs, Web Filters, Firewalls, domain-wide security policies, Proxy ([Squid](http://www.squid-cache.org/) modo proxy no-transparente con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) [reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Úselo bajo su propio riesgo
+- This project contains hex-strings (hexadecimal chains) that are not exclusive to anonymizers, so they can eventually generate false positives (FP). Additionally [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) rule can slow down your system. Keep in mind that string matching is intensive, unreliable and is the last resort, since to block anonymizers there are other more effective solutions, such as VPNs, Web Filters, domain-wide security policies, Firewalls, Proxy ([Squid](http://www.squid-cache.org/) non-transparent proxy mode with [Blackweb](https://github.com/maravento/blackweb) and [Blackip](https://github.com/maravento/blackip) projects [advanced rules](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Use it at your own risk / Este proyecto contiene hex-strings (cadenas hexadecimales) que no son exclusivas de los anonimizadores, por tanto eventualmente pueden generar falsos positivos (FP). Adicionalmente la regla [Iptables](http://www.netfilter.org/documentation/HOWTO/es/packet-filtering-HOWTO-7.html) puede ralentizar su sistema. Tenga en cuenta que la coincidencia de cadenas es intensiva, poco confiable y es el último recurso, ya que para bloquear los anonimizadores existen otras soluciones más efectivas, como VPNs, Web Filters, Firewalls, domain-wide security policies, Proxy ([Squid](http://www.squid-cache.org/) modo proxy no-transparente con los proyectos [Blackweb](https://github.com/maravento/blackweb) y [Blackip](https://github.com/maravento/blackip) [reglas avanzadas](https://github.com/maravento/blackip#squid-cache-advanced-rules)), etc. Úselo bajo su propio riesgo
 - At the moment, only hex-strings are included for [Ultrasurf](https://ultrasurf.us/) / Por el momento, solo se incluye hex-strings para [Ultrasurf](https://ultrasurf.us/)
 
 ### HOW TO USE
@@ -34,7 +40,7 @@ BSH=$(curl -s https://raw.githubusercontent.com/maravento/blackstring/master/bsh
 # Blackstring Rule
 $iptables -N blackstring
 for string in `echo -e "$BSG" | sed -e '/^#/d' -e 's:#.*::g'`; do
-    $iptables -A FORWARD -i $lan -p tcp --sport 49152:65535 --dport 443 -m string --hex-string "|$string|" --algo bm -j blackstring
+    $iptables -A FORWARD -i $lan -m string --hex-string "|$string|" --algo bm -j blackstring
 done
 for string in `echo -e "$BSH" | sed -e '/^#/d' -e 's:#.*::g'`; do
     $iptables -A blackstring -m string --hex-string "|$string|" --algo kmp -j NFLOG --nflog-prefix 'Blackstring: '
@@ -65,6 +71,19 @@ Sep 30 19:09:12 user Blackstring: IN=enp2s1 OUT=enp2s0 MAC=94:18:82:XX:XX:XX:08:
 
 -  [bm](https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm)
 -  [kmp](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm)
+
+##### Well-known domains used by anonymizers
+
+```
+.activatebarbellfoothill.info
+.bazookariddancelividly.info
+.heftinesscongresscandy.info
+.septa.org
+.spay.samsung.com
+.stablepostureswinging.info
+.steadfastraspingsubtotal.info
+.tsx.com
+```
 
 ### CONTRIBUTIONS
 ---
